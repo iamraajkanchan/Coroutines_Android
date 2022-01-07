@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity()
     {
         Log.d(TAG , "Coroutines :: task1 : ${Thread.currentThread().name}")
         Log.d(TAG , "Coroutines :: task1 : Starting Task 1")
-        delay(1000)
+        yield()
         Log.d(TAG , "Coroutines :: task1 : Ending Task 1")
     }
 
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity()
     {
         Log.d(TAG , "Coroutines :: task2 : ${Thread.currentThread().name}")
         Log.d(TAG , "Coroutines :: task2 : Starting Task 2")
-        delay(1000)
+        yield()
         Log.d(TAG , "Coroutines :: task2 : Ending Task 2")
     }
 }
