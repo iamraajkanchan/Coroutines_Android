@@ -16,27 +16,18 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        CoroutineScope(Dispatchers.Main).launch {
-            task1()
-        }
-        CoroutineScope(Dispatchers.Main).launch {
-            task2()
+        CoroutineScope(Dispatchers.IO).launch {
+            execute()
         }
     }
 
-    private suspend fun task1()
+    private suspend fun execute()
     {
-        Log.d(TAG , "Coroutines :: task1 : ${Thread.currentThread().name}")
-        Log.d(TAG , "Coroutines :: task1 : Starting Task 1")
-        delay(1000)
-        Log.d(TAG , "Coroutines :: task1 : Ending Task 1")
-    }
-
-    private suspend fun task2()
-    {
-        Log.d(TAG , "Coroutines :: task2 : ${Thread.currentThread().name}")
-        Log.d(TAG , "Coroutines :: task2 : Starting Task 2")
-        delay(1000)
-        Log.d(TAG , "Coroutines :: task2 : Ending Task 2")
+        val parentJob = GlobalScope.launch(Dispatchers.Main) {
+            Log.d(TAG , "MainActivity :: execute :: parentJob :: ${this.coroutineContext}")
+            val childJob = launch {
+                Log.d(TAG , "MainActivity :: execute :: childJob :: ${this.coroutineContext}")
+            }
+        }
     }
 }
