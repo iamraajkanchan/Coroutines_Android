@@ -16,27 +16,19 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        CoroutineScope(Dispatchers.Main).launch {
-            task1()
-        }
-        CoroutineScope(Dispatchers.Main).launch {
-            task2()
+        CoroutineScope(Dispatchers.IO).launch {
+            executeTask()
         }
     }
 
-    private suspend fun task1()
+    private suspend fun executeTask()
     {
-        Log.d(TAG , "Coroutines :: task1 : ${Thread.currentThread().name}")
-        Log.d(TAG , "Coroutines :: task1 : Starting Task 1")
-        delay(1000)
-        Log.d(TAG , "Coroutines :: task1 : Ending Task 1")
+        Log.d(TAG , "MainActivity :: executeTask :: Before")
+        withContext(Dispatchers.IO) {
+            delay(1000)
+            Log.d(TAG , "MainActivity :: executeTask :: Inside")
+        }
+        Log.d(TAG , "MainActivity :: executeTask :: After")
     }
 
-    private suspend fun task2()
-    {
-        Log.d(TAG , "Coroutines :: task2 : ${Thread.currentThread().name}")
-        Log.d(TAG , "Coroutines :: task2 : Starting Task 2")
-        delay(1000)
-        Log.d(TAG , "Coroutines :: task2 : Ending Task 2")
-    }
 }
